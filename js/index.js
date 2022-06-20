@@ -1,4 +1,5 @@
 import { GameLoop } from './GameLoop.js';
+import {Keyboard} from "./Keyboard";
 
 (function () {
     let debugLogs = true;
@@ -9,6 +10,15 @@ import { GameLoop } from './GameLoop.js';
     };
 
     gameLoop.initialize(() => {
+        Keyboard.initialize();
+
+        Keyboard.onKeyChanged(' ', function (keyDown) {
+            if (keyDown) {
+                if (gameLoop.loopState === GameLoop.LoopState.STOPPED) {
+                    gameLoop.start();
+                }
+            }
+        });
     });
 
     function onUpdate (delayMilli, delaySeconds) {
